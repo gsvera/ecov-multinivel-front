@@ -1,0 +1,70 @@
+.bg-login{
+    // background-image: url(/assets/logo/ecov-energy-verde.png);
+    background-color: var(--background-eco-dark);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    .container-login{
+        width: 700px;
+        height: 400px;
+        backdrop-filter: blur(20px);
+        border-radius: 30px;
+        display: flex;
+        background-color: white;
+        justify-content: center;
+        .center-text-title-login{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 49%;
+        }   
+        .line-vertical{
+            width: 1px;
+            height: 95%;
+            margin: auto 0;
+            background-color: rgb(var(--background-eco));
+        }
+        .content-form-login{
+            width: 49%;
+            height: 100%;
+            .center-form-login{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;;
+            }
+            .ant-form-item-row{
+                display: block;
+                margin: 0 auto;
+                justify-content: center;
+            }
+            .ant-form-item-label{
+                display: flex;
+                justify-content: center;
+                label{
+                    text-align: center;
+                    font-weight: 500;
+                    font-size: 1em;
+                }
+            }
+            .btn-login{
+                width: 100%;
+                background-color: var(--color-btn-login);
+                color: white;
+                border-radius: 5px;
+                border: none;
+                height: 35px;
+                cursor: pointer;
+            }
+        }
+    }
+    .inp-login{
+        border: 1px solid rgb(var(--background-eco));
+        height: 35px;
+    }
+}

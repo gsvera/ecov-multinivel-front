@@ -1,0 +1,33 @@
+.t-center {
+    text-align: center;
+}
+.t-disabled {
+    color: var(--back-color-disabled);
+}
+.f-bold {
+    font-weight: 500;
+}
+.t-m{
+    font-size: 1.2em;
+}
+.mt-2{
+    margin-top: 1.2em;
+}
+.mt-3{
+    margin-top: 1.5em;
+}
+.mr-2 {
+    margin-right: 1.2em;
+}
+.d-flex {
+    display: flex;
+}
+.icon-menu{
+    font-size: 26px;
+}
+.pointer{
+    cursor: pointer;
+}
+.click:active{
+    transform: scale(0.9);
+}

@@ -1,95 +1,124 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import ButtonCustom from "@/components/ButtonCustom";
+import { Col, Form, Input } from "antd";
+import { useForm } from "antd/es/form/Form";
+import { LoadingOutlined } from "@ant-design/icons";
+import "./index.scss";
+import { useMutation } from "@tanstack/react-query";
+import apiUser from "@/api/servicesEcov/apiUser";
+import { ResponseAPi } from "@/api/responseApi";
+import { useEffect, useState } from "react";
+import { useNotification } from "@/hooks/UseNotification";
+import LoaderPage from "@/components/LoaderPage";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "@/store-redux/slide/userSlide";
+import { useRouter } from "next/navigation";
+import { parsePasswordEncrypt } from "@/utils";
+import { RootState } from "@/store-redux/store";
+
+export default function Login() {
+  const [form] = useForm();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const { openErrorNotification } = useNotification();
+  const { token } = useSelector((state: RootState) => state.userSlice);
+  const dispatch = useDispatch();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      router.push("/admin");
+    }
+  }, [token]);
+
+  const { mutate: loginUser } = useMutation({
+    mutationFn: (data) => apiUser.login(data),
+    onSuccess: (data: ResponseAPi) => handleSuccessLogin(data),
+    onError: (err) => handleErrorLogin(err),
+  });
+
+  const handleSuccessLogin = (data: ResponseAPi) => {
+    setLoading(false);
+    console.log(data);
+    if (!data.data.error) {
+      dispatch(setToken(data?.data.items));
+      router.push("/admin");
+    } else {
+      openErrorNotification(data.data.message);
+    }
+  };
+
+  const handleErrorLogin = (err: unknown) => {
+    setLoading(false);
+    openErrorNotification();
+    console.log(err);
+  };
+
+  const onLogin = async () => {
+    try {
+      await form.validateFields();
+      const passEncrypt = parsePasswordEncrypt(form.getFieldValue("password"));
+      loginUser({ ...form.getFieldsValue(), password: passEncrypt });
+      setLoading(true);
+    } catch (err) {
+      console.log(err);
+      openErrorNotification();
+      setLoading(false);
+    }
+  };
+  if (!isClient) {
+    <LoaderPage />;
+  }
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+    <div className="bg-login">
+      <div className="container-login">
+        <div className="center-text-title-login">
+          <img src="/ecov-energy-verde.png" style={{ width: "90%" }} />
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="line-vertical"></div>
+        <div className="content-form-login">
+          <Form form={form} style={{ height: "100%" }}>
+            <div className="center-form-login">
+              <div>
+                <div>
+                  <h1>Inicio de sesión</h1>
+                </div>
+                <Col>
+                  <Form.Item label="Usuario" name="email">
+                    <Input className="inp-login" />
+                  </Form.Item>
+                </Col>
+                <Col>
+                  <Form.Item label="Contraseña" name="password">
+                    <Input.Password className="inp-login" />
+                  </Form.Item>
+                </Col>
+                <ButtonCustom
+                  classNameButton="btn-login"
+                  text={
+                    loading ? (
+                      <LoadingOutlined
+                        style={{ fontSize: "1.5em", color: "black" }}
+                      />
+                    ) : (
+                      "Iniciar sesion"
+                    )
+                  }
+                  onClick={onLogin}
+                />
+                <div className="t-center mt-2 t-disabled f-bold">
+                  <p>¿Olvidaste tu contraseña?</p>
+                </div>
+              </div>
+            </div>
+          </Form>
+        </div>
+      </div>
     </div>
   );
 }

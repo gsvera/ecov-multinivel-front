@@ -1,0 +1,32 @@
+.logout-modal{
+    width: 300px !important;
+    .content-modal{
+        padding-top: 20px;
+        text-align: center;
+    }
+    .footer-btns{
+        display: flex;
+        justify-content: center;
+        .content-btn{
+            margin-top: 15px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            .btn-footer {
+                width: 90%;
+                height: 45px;
+                border-radius: 5px;
+                
+            }
+            .btn-cancel{
+                border: 0.1em solid var(--color-cancel);
+                background: var(--background-eco-secondary);
+            }
+            .btn-confirm {
+                border: transparent;
+                background-color: var(--background-eco-dark);
+                color: white;
+            }
+        }
+    }
+}
