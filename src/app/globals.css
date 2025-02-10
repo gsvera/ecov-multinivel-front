@@ -4,9 +4,10 @@
   --background-eco: 143, 206, 54;
   --background-eco-dark:#182236;
   --background-eco-secondary: #F1F1F1;
+  --background-eco-sumbit: #8FCE36;
 
   --color-btn-login: #015fdd;
-  --background-menu-principal: #3c3c3c;
+  
   --background-menu-header: #e8e8e8;
   --back-color-disabled: #a0a0a0;
   --background-strong-blue: #15243E;
@@ -23,7 +24,8 @@
 
   --color-text-strong: black;
   --color-text-strong-inverter: white;
-  --color-text-secondary: #b1b1b1 ;
+  --color-text-light: #b1b1b1 ;
+  --color-text-secondary: #a2a2a2;
   
   --table-bg-gray: #C6C8CA;
   --table-bg-secondary:#D6D8DB;

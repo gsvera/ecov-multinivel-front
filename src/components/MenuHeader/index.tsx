@@ -6,11 +6,13 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import apiUser from "@/api/servicesEcov/apiUser";
 import { ResponseAPi } from "@/api/responseApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "@/store-redux/slide/userSlide";
 import { useNotification } from "@/hooks/UseNotification";
+import { RootState } from "@/store-redux/store";
 
 export const MenuHeader = () => {
+  const { userDTO } = useSelector((state: RootState) => state.userSlice);
   const { openErrorNotification } = useNotification();
   const dispatch = useDispatch();
   const [openModal, setOpenMolda] = useState(false);
@@ -44,7 +46,9 @@ export const MenuHeader = () => {
   };
   return (
     <div className="menu-header">
-      <div className="mr-2">nombre de usuario</div>
+      <div className="mr-2">
+        {userDTO.firstName} {userDTO.lastName}
+      </div>
       <div className="d-flex">
         <Tooltip title="Cerrar sesión" placement="left">
           <BsBoxArrowRight

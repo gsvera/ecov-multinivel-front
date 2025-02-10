@@ -10,12 +10,15 @@ import { Menu } from "@/components/Menu";
 import { MenuHeader } from "@/components/MenuHeader";
 
 export default function Admin() {
-  const { token } = useSelector((state: RootState) => state.userSlice);
+  const { token, userDTO } = useSelector((state: RootState) => state.userSlice);
   const router = useRouter();
 
   useEffect(() => {
     if (!token) {
       router.push("/");
+    }
+    if (userDTO.workgroupId !== 1) {
+      // AQUI RETORNAREMOS A LA VISTA CLIENTE por si tratan de forzar la entrada
     }
   }, [token, router]);
 

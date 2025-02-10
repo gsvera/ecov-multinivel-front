@@ -5,20 +5,24 @@ type dataUserProps = {
     firstName: string | null,
     lastName: string | null,
     email: string | null,
+    workgroupId: number | null,
+    phoneNumber: string | null
 }
 
 export type userStateProps = {
     token: string | null;
-    dataUser: dataUserProps;
+    userDTO: dataUserProps;
 }
 
 const initialState: userStateProps = {
   token: null,
-  dataUser: {
+  userDTO: {
     id: null,
     firstName: null,
     lastName: null,
     email: null,
+    workgroupId: null,
+    phoneNumber: null
     // permissionXProfiles: [],
   },
 };
@@ -33,12 +37,12 @@ export const userSlice = createSlice({
     // setIdUser: (state, action) => {
     //   state.dataUser.idUser = action.payload;
     // },
-    // setDataUser: (state, action) => {
-    //   state.dataUser = action.payload;
-    // },
+    setDataUser: (state, action) => {
+      state.userDTO = action.payload;
+    },
   },
 });
 
-export const { setToken /** , setDataUser, setIdUser */ } = userSlice.actions;
+export const { setToken, setDataUser /** , setIdUser */ } = userSlice.actions;
 
 export default userSlice.reducer;

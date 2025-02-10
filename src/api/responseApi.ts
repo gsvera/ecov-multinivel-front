@@ -1,6 +1,7 @@
+
 type ObjectResponse = {
     error: boolean;
-    items: object[] | unknown | string;
+    items: object[] | string | unknown;
     message: string;
 }
 

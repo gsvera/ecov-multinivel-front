@@ -10,6 +10,15 @@
 .t-m{
     font-size: 1.2em;
 }
+.t-l{
+    font-size: 2em;
+}
+.t-secondary {
+    color: var(--color-text-secondary) ;
+}
+.mt-1 {
+    margin-top: 1em;;
+}
 .mt-2{
     margin-top: 1.2em;
 }
@@ -31,3 +40,41 @@
 .click:active{
     transform: scale(0.9);
 }
+.btn-lg-sumbit{
+    background: var(--background-eco-sumbit);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    font-size: 1.1em;
+}
+.btn-lg-disabled{
+    background: var(--back-color-disabled);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    font-size: 1.1em;
+}
+
+.disabled-button {
+    background: var(--back-color-disabled) !important;
+    text-align: center;
+    padding: 7px 15px;    
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    width: 100%;
+  }
+  .form-item-column{
+    div{
+        display: block !important;
+        width: 100%;
+        .ant-form-item-label {
+            text-align: start !important;
+            font-weight: 500;
+        }
+    }
+  }

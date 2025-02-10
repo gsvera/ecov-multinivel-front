@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./general.scss";
 import App from "./App";
+import "./index.scss";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",

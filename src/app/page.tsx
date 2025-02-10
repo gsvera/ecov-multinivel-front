@@ -12,10 +12,15 @@ import { useEffect, useState } from "react";
 import { useNotification } from "@/hooks/UseNotification";
 import LoaderPage from "@/components/LoaderPage";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "@/store-redux/slide/userSlide";
+import {
+  setDataUser,
+  setToken,
+  userStateProps,
+} from "@/store-redux/slide/userSlide";
 import { useRouter } from "next/navigation";
 import { parsePasswordEncrypt } from "@/utils";
 import { RootState } from "@/store-redux/store";
+import Link from "next/link";
 
 export default function Login() {
   const [form] = useForm();
@@ -44,9 +49,10 @@ export default function Login() {
 
   const handleSuccessLogin = (data: ResponseAPi) => {
     setLoading(false);
-    console.log(data);
     if (!data.data.error) {
-      dispatch(setToken(data?.data.items));
+      const session: userStateProps = data?.data.items as userStateProps;
+      dispatch(setToken(session.token));
+      dispatch(setDataUser(session.userDTO));
       router.push("/admin");
     } else {
       openErrorNotification(data.data.message);
@@ -112,7 +118,9 @@ export default function Login() {
                   onClick={onLogin}
                 />
                 <div className="t-center mt-2 t-disabled f-bold">
-                  <p>¿Olvidaste tu contraseña?</p>
+                  <Link href={"/recovery-password"}>
+                    ¿Olvidaste tu contraseña?
+                  </Link>
                 </div>
               </div>
             </div>
