@@ -7,7 +7,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import "./index.scss";
 import { useMutation } from "@tanstack/react-query";
 import apiUser from "@/api/servicesEcov/apiUser";
-import { ResponseAPi } from "@/api/responseApi";
+import { ResponseApi } from "@/api/responseApi";
 import { useEffect, useState } from "react";
 import { useNotification } from "@/hooks/UseNotification";
 import LoaderPage from "@/components/LoaderPage";
@@ -21,13 +21,14 @@ import { useRouter } from "next/navigation";
 import { parsePasswordEncrypt } from "@/utils";
 import { RootState } from "@/store-redux/store";
 import Link from "next/link";
+import { WORKGROUP } from "@/config/constants";
 
 export default function Login() {
   const [form] = useForm();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { openErrorNotification } = useNotification();
-  const { token } = useSelector((state: RootState) => state.userSlice);
+  const { token, userDTO } = useSelector((state: RootState) => state.userSlice);
   const dispatch = useDispatch();
   const [isClient, setIsClient] = useState(false);
 
@@ -37,23 +38,27 @@ export default function Login() {
 
   useEffect(() => {
     if (token) {
-      router.push("/admin");
+      switch (userDTO.workgroupId) {
+        case WORKGROUP.CLIENT:
+          return router.push("/affiliate");
+        case WORKGROUP.ADMIN:
+          return router.push("/admin");
+      }
     }
-  }, [token]);
+  }, [token, userDTO.workgroupId]);
 
   const { mutate: loginUser } = useMutation({
     mutationFn: (data) => apiUser.login(data),
-    onSuccess: (data: ResponseAPi) => handleSuccessLogin(data),
+    onSuccess: (data: ResponseApi) => handleSuccessLogin(data),
     onError: (err) => handleErrorLogin(err),
   });
 
-  const handleSuccessLogin = (data: ResponseAPi) => {
+  const handleSuccessLogin = (data: ResponseApi) => {
     setLoading(false);
     if (!data.data.error) {
       const session: userStateProps = data?.data.items as userStateProps;
       dispatch(setToken(session.token));
       dispatch(setDataUser(session.userDTO));
-      router.push("/admin");
     } else {
       openErrorNotification(data.data.message);
     }
@@ -105,7 +110,7 @@ export default function Login() {
                   </Form.Item>
                 </Col>
                 <ButtonCustom
-                  classNameButton="btn-login"
+                  classNameButton="btn-login mt-2"
                   text={
                     loading ? (
                       <LoadingOutlined

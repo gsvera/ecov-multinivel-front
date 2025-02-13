@@ -3,7 +3,8 @@ import {
   WarningOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
-import { notification, Typography } from "antd";
+import { Modal, notification, Row, Typography } from "antd";
+import { CircleCheck, CircleFailed } from "@/components/icons";
 
 const { Text } = Typography;
 
@@ -15,24 +16,9 @@ const defaultNotificationProps = {
 };
 
 const useNotification = () => {
-  // const [api, contextHolder] = notification.useNotification();
-
-  // const openNotification = () => {
-  //   api.open({
-  //     key,
-  //     message: "Notification Title",
-  //     description: "description.",
-  //   });
-  //   setTimeout(() => {
-  //     api.open({
-  //       key,
-  //       message: "New Title",
-  //       description: "New description.",
-  //     });
-  //   }, 1000);
-  // };
-
-  const openErrorNotification = (message = "Error") => {
+  const openErrorNotification = (
+    message = "Ha ocurrido un error con el servicio, intentelo más tarde"
+  ) => {
     notification.error({
       ...defaultNotificationProps,
       message: <Text style={{ color: "white" }}>{message}</Text>,
@@ -67,14 +53,43 @@ const useNotification = () => {
     notification.destroy(key);
   };
 
+  const OpenSuccessModal = ({
+    title,
+    message,
+    open,
+    onCloseModal,
+    closable,
+    ...props
+  }) => {
+    const handleCancel = () => {
+      if (closable) onCloseModal?.();
+    };
+    return (
+      <Modal
+        open={open}
+        closable={closable}
+        onCancel={handleCancel}
+        footer={false}
+        title={title}
+        {...props}
+      >
+        <Row style={{ justifyContent: "center" }}>
+          <CircleCheck />
+        </Row>
+        <Row style={{ marginTop: 15 }}>
+          <p style={{ textAlign: "justify" }}>{message}</p>
+        </Row>
+      </Modal>
+    );
+  };
+
   return {
     openErrorNotification,
     openSuccessNotification,
     destroyAllNotification,
     destroyNotification,
     openInfoNotification,
-    // openNotification,
-    // contextHolder,
+    OpenSuccessModal,
   };
 };
 

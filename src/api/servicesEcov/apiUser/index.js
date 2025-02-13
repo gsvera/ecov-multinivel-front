@@ -21,6 +21,18 @@ export const apiUser = {
   saveNewPassword: function (data) {
     return axiosInstance.put(`${BASE_URL}/save-new-password`, data);
   },
+  saveNewAffiliate: function (data) {
+    const { reference } = data;
+    return axiosInstance.post(
+      `${BASE_URL}/new-affiliate?reference=${reference}`,
+      data
+    );
+  },
+  accountConfirm: function (token) {
+    return axiosInstance.put(
+      `${BASE_URL}/confirm-account?token-confirm=${token}`
+    );
+  },
 };
 
 export default apiUser;

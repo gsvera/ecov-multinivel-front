@@ -16,6 +16,9 @@
 .t-secondary {
     color: var(--color-text-secondary) ;
 }
+.t-aling-s {
+    text-align: start;
+}
 .mt-1 {
     margin-top: 1em;;
 }
@@ -27,6 +30,12 @@
 }
 .mr-2 {
     margin-right: 1.2em;
+}
+.ml-1 {
+    margin-left: 1em;
+}
+.ml-2 {
+    margin-left: 1.2em;
 }
 .d-flex {
     display: flex;
@@ -68,6 +77,15 @@
     border-radius: 3px;
     width: 100%;
   }
+  .two-inputs{
+    justify-content: space-between;
+    .form-div {
+        width: 49% !important;        
+    }
+  }
+  .ant-form-item {
+    margin-bottom: 10px;
+}
   .form-item-column{
     div{
         display: block !important;

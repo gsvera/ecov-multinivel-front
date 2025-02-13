@@ -120,7 +120,7 @@ export default function ResetNewPassword() {
                   <Input.Password />
                 </Form.Item>
               </div>
-              <div className="mt-2">
+              <div>
                 <Form.Item
                   className="form-item-column"
                   label="Confirmar nueva contraseña"

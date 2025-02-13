@@ -1,35 +1,33 @@
 "use client";
 import { useSelector } from "react-redux";
-import "./index.scss";
 import { useRouter } from "next/navigation";
 
 import { RootState } from "@/store-redux/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import LoaderPage from "@/components/LoaderPage";
 import { Menu } from "@/components/Menu";
 import { MenuHeader } from "@/components/MenuHeader";
+import { WORKGROUP } from "@/config/constants";
 
 export default function Admin() {
   const { token, userDTO } = useSelector((state: RootState) => state.userSlice);
+  const [loadPage, setLoadPage] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    if (!token) {
-      router.push("/");
-    }
-    if (userDTO.workgroupId !== 1) {
-      // AQUI RETORNAREMOS A LA VISTA CLIENTE por si tratan de forzar la entrada
-    }
-  }, [token, router]);
+    if (!token) return router.push("/");
+    if (userDTO.workgroupId !== WORKGROUP.ADMIN)
+      return router.push("/affiliate");
 
-  if (!token) {
-    return <LoaderPage />;
-  }
+    setLoadPage(true);
+  }, [token, userDTO.workgroupId]);
+
+  if (!token || !loadPage) return <LoaderPage />;
 
   return (
     <div className="d-flex">
       <Menu />
-      <div className="content-right">
+      <div className="body-right-content">
         <MenuHeader />
         <div></div>
       </div>

@@ -7,7 +7,7 @@ import { REGEX } from "@/config/constants";
 import { useNotification } from "@/hooks/UseNotification";
 import { useMutation } from "@tanstack/react-query";
 import apiUser from "@/api/servicesEcov/apiUser";
-import { ResponseAPi } from "@/api/responseApi";
+import { ResponseApi } from "@/api/responseApi";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const RecoveryPassword = () => {
@@ -20,11 +20,11 @@ const RecoveryPassword = () => {
 
   const { mutate: sendRecoveryPassword, isPending } = useMutation({
     mutationFn: (data: string) => apiUser.sendRecoveryPassword(data),
-    onSuccess: (data: ResponseAPi) => handleSuccessSendRecoveryPassword(data),
+    onSuccess: (data: ResponseApi) => handleSuccessSendRecoveryPassword(data),
     onError: () => handleErrorSendRecoveryPassword(),
   });
 
-  const handleSuccessSendRecoveryPassword = (data: ResponseAPi) => {
+  const handleSuccessSendRecoveryPassword = (data: ResponseApi) => {
     if (!data.data.error) {
       openSuccessNotification(
         "Se ha enviado un correo a su cuenta para restablecer la contraseña, favor de revisar su bandeja de entrada."

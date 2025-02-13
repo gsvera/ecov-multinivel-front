@@ -5,6 +5,6 @@ type ObjectResponse = {
     message: string;
 }
 
-export type ResponseAPi = {
+export type ResponseApi = {
     data: ObjectResponse    
 }

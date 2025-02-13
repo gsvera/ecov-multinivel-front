@@ -5,13 +5,15 @@ import LogoutModal from "../LogoutModal";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import apiUser from "@/api/servicesEcov/apiUser";
-import { ResponseAPi } from "@/api/responseApi";
+import { ResponseApi } from "@/api/responseApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "@/store-redux/slide/userSlide";
 import { useNotification } from "@/hooks/UseNotification";
 import { RootState } from "@/store-redux/store";
+import { useRouter } from "next/navigation";
 
 export const MenuHeader = () => {
+  const router = useRouter();
   const { userDTO } = useSelector((state: RootState) => state.userSlice);
   const { openErrorNotification } = useNotification();
   const dispatch = useDispatch();
@@ -19,20 +21,20 @@ export const MenuHeader = () => {
 
   const { mutate: logout } = useMutation({
     mutationFn: () => apiUser.logout(),
-    onSuccess: (data: ResponseAPi) => handleSuccessLogout(data),
+    onSuccess: (data: ResponseApi) => handleSuccessLogout(data),
     onError: () => handleErrorLogout(),
   });
 
-  const handleSuccessLogout = (data: ResponseAPi) => {
+  const handleSuccessLogout = (data: ResponseApi) => {
     if (!data.data.error) {
       dispatch(setToken(null));
       setOpenMolda(false);
+      router.push("/");
     }
   };
 
   const handleErrorLogout = () => {
     openErrorNotification();
-    // console.log(err);
   };
 
   const handleLogout = () => {

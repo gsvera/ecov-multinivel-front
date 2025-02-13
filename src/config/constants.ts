@@ -6,6 +6,11 @@ export enum MODULES {
     MODULE_DOCUMENTS = 'MODULE_DOCUMENTS'
 }
 
+export enum WORKGROUP {
+    ADMIN = 1,
+    CLIENT = 2
+}
+
 export const REGEX: {[key:string]:RegExp}= {
     EMAIL: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, 
     NUMBER: /^\d+$/,

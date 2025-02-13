@@ -67,7 +67,7 @@
         border: 1px solid rgb(var(--background-eco));
         height: 35px;
     }
-    .recovery-password, .reset-password {
+    .recovery-password, .reset-password, .register-component {
         width: 500px;
         padding: 30px;
         backdrop-filter: blur(20px);
@@ -77,5 +77,10 @@
         background-color: white;
         justify-content: center;
         text-align: center;
+    }
+}
+.body-content {
+    .body-right-content {
+        width: 100%;
     }
 }
