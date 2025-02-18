@@ -1,0 +1,17 @@
+.custom-node-tree{
+    border: 0.1em solid gray;   
+    border-radius: 5px;
+    padding: 10px 15px;    
+    min-width: 160px;
+    max-width: 160px;
+    .node-header{
+        display: flex;
+        justify-content: space-between;
+        .node-title{
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 130px;
+        }
+    }
+}

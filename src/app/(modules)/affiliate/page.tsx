@@ -14,8 +14,8 @@ export default function Affiliate() {
   const [loadPage, setLoadPage] = useState(false);
 
   useEffect(() => {
-    if (!token) return router.push("/");
-    if (userDTO.workgroupId !== WORKGROUP.CLIENT) return router.push("/admin");
+    if (!token || userDTO.workgroupId !== WORKGROUP.CLIENT)
+      return router.push("/");
     setLoadPage(true);
   }, [token, userDTO.workgroupId]);
 
@@ -23,7 +23,7 @@ export default function Affiliate() {
 
   return (
     <div className="d-flex">
-      <Menu />
+      <Menu changeModule={() => {}} />
       <div className="body-right-content">
         <MenuHeader />
         <div></div>

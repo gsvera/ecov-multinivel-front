@@ -3,9 +3,13 @@ import { ApartmentOutlined, ShoppingOutlined } from "@ant-design/icons";
 import { BsBookmarkStar, BsCashCoin, BsFolder2Open } from "react-icons/bs";
 import { MODULES } from "@/config/constants";
 
-export const Menu = () => {
+type menuProps = {
+  changeModule: (module: string) => void;
+};
+
+export const Menu = ({ changeModule }: menuProps) => {
   const handleMenuModule = (module: string) => {
-    console.log("🚀 ~ handleMenuModule ~ module:", module);
+    changeModule(module);
   };
   return (
     <div className="menu">

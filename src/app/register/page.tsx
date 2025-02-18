@@ -48,7 +48,7 @@ export default function Register() {
     setOpenModal(true);
     setTimeout(() => {
       router.push("/affiliate");
-    }, 20000);
+    }, 10000);
   };
 
   useEffect(() => {
