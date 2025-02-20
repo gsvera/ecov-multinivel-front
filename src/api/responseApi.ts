@@ -1,3 +1,7 @@
+export type ItemsResponse = {
+    result:object[],
+    isLastPage?: false 
+}
 
 type ObjectResponse = {
     error: boolean;

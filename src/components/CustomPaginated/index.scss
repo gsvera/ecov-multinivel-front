@@ -1,0 +1,115 @@
+.custom-paginated {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    height: max-content;
+    align-items: center;
+  
+    > .text {
+      display: flex;
+      align-items: center;
+      margin-right: 5px;
+      white-space: normal;
+      overflow-wrap: break-word;
+      overflow: hidden;
+      max-height: 64px;
+    }
+  
+    > .number {
+      margin-right: 10px;
+      height: 32px;
+      .ant-select {
+        > span {
+          background-color: white;
+          > .anticon svg,
+          svg path {
+            fill: black;
+          }
+        }
+      }
+      .ant-select-selector {
+        border: 1px solid var(--background-color-contrast);
+        background-color: white !important;
+      }
+      .ant-select-selection-item {
+        color: black;
+      }
+      .ant-select-disabled {
+        .ant-select-selection-item {
+          color: #c8c8c8 !important;
+        }
+      }
+    }
+  
+    > .actions {
+      display: flex;
+      flex-direction: row;
+      width: fit-content;
+      border: 0.5px solid var(--background-color-contrast);
+      border-radius: 6px;
+      background-color: white;
+      height: 34px;
+  
+      > button {
+        padding-inline: 8px !important;
+        background: #d7d7d7 !important;
+        color: black;
+        border: none;
+        span {
+          svg {
+            fill: black;
+          }
+        }
+        &:hover {
+          span {
+            svg {
+              fill: #8c8c8c;
+            }
+          }
+        }
+      }
+  
+      .left {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+  
+      .rigth {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+  
+      .page {
+        background: white;
+        color: black;
+        border-top: 1px;
+        border-bottom: 1px;
+        border-color: var(--border-inputs);
+        width: fit-content;
+        padding-inline: 5px;
+        min-width: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .ant-input-number {
+          border: none;
+          width: 50px;
+          padding: 0;
+          input {
+            text-align: center;
+          }
+        }
+        .ant-input-number-handler-wrap {
+          display: none;
+        }
+      }
+      :has(input) {
+        color: black;
+      }
+  
+      .disabled {
+        color: #c8c8c8 !important;
+        background: gray !important;
+      }
+    }
+  }

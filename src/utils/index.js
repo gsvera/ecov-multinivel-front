@@ -13,3 +13,69 @@ export const parsePasswordEncrypt = (text) => {
 
   return encrypted.toString();
 };
+
+export const transformDataToFlow = (
+  data,
+  parentId,
+  x = 0,
+  y = 1,
+  level = 1
+) => {
+  let nodes = [];
+  let edges = [];
+  const nodeSpacingX = 200; // Espaciado horizontal
+  const nodeSpacingY = 40; // Espaciado vertical
+
+  // Calcular el ancho total requerido para los hijos de cada nodo
+  const getTotalWidth = (node) => {
+    if (node.child.length === 0) return nodeSpacingX; // Espacio mínimo
+    return node.child.reduce((sum, child) => sum + getTotalWidth(child), 0);
+  };
+
+  let currentX = x;
+
+  data?.forEach((user) => {
+    const nodeId = user.id;
+    const totalWidth = getTotalWidth(user);
+    const posX = currentX + totalWidth / 2 - nodeSpacingX / 2;
+    const posY = y + level * nodeSpacingY; // Espaciado vertical
+
+    nodes.push({
+      id: nodeId,
+      type: "custom",
+      draggable: false,
+      connectable: false,
+      data: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        createdDate: user.createdDate,
+        idUser: user.id,
+        onClick: (name) => console.log(`Hola ${name}`),
+      },
+      position: { x: posX, y: posY },
+    });
+
+    if (parentId) {
+      edges.push({
+        id: `${parentId}-${nodeId}`,
+        source: parentId,
+        target: nodeId,
+      });
+    }
+
+    if (user.child.length > 0) {
+      const { nodes: childNodes, edges: childEdges } = transformDataToFlow(
+        user.child,
+        nodeId,
+        currentX,
+        posY,
+        level + 1
+      );
+      nodes = [...nodes, ...childNodes];
+      edges = [...edges, ...childEdges];
+    }
+    currentX += totalWidth;
+  });
+
+  return { nodes, edges };
+};

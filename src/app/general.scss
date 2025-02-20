@@ -102,3 +102,15 @@
         }
     }
   }
+  .bdg-success{
+    background-color: var(--color-checked);
+    color: var(--color-text-strong-inverter);
+    padding: 5px;
+    border-radius: 3px;
+  }
+  .bdg-danger{
+    background-color: var(--color-danger);
+    color: var(--color-text-strong-inverter);
+    padding: 5px;
+    border-radius: 3px;
+  }

@@ -1,0 +1,44 @@
+.table-data-affiliate{
+    .content-filter{
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        .input-delay{
+            width: 300px;
+            margin-bottom: 15px;
+        }
+    }
+    .table-affiliate{
+        width: 100%;
+        border-collapse: collapse;
+        max-height: 300px;
+        overflow-y: auto;
+        table{
+
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead {
+            position: sticky;
+            top: 0;
+            background-color: #f9f9f9;
+            z-index: 1;
+            tr {
+                th {
+                    text-align: left;
+                }
+            }
+        }
+        tbody {
+            tr {
+                border-bottom: 1px inset ;
+                td {
+                    height: 35px;
+                }
+            }
+        }
+        th, td {
+            padding: 8px;
+        }
+    }
+}

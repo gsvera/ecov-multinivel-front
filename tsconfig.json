@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/App.js", "next.config.mjs", "src/components/AffiliateTree/index.tsxs"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/App.js", "next.config.mjs", "src/components/AffiliateTree/index.tsxs", "src/components/CustomTable/index.js"],
   "exclude": ["node_modules"]
 }
