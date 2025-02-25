@@ -7,6 +7,7 @@ import {
   useNodesState,
   useEdgesState,
   BackgroundVariant,
+  useReactFlow,
 } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
@@ -45,6 +46,7 @@ export const AffiliateTree = ({
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         // onConnect={onConnect}
+        fitView
         nodeTypes={nodeTypes}
       >
         <Controls />

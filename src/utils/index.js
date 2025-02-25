@@ -61,6 +61,13 @@ export const transformDataToFlow = (
         source: parentId,
         target: nodeId,
       });
+    } else {
+      // se agrega un edge generico para que se vea al menos el nodo principal
+      edges.push({
+        id: `${parentId}-${nodeId}`,
+        source: 1,
+        target: 1,
+      });
     }
 
     if (user.child.length > 0) {
