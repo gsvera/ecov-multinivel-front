@@ -39,7 +39,6 @@ const RecoveryPassword = () => {
   };
 
   const handleSendRecovery = () => {
-    console.log(REGEX.EMAIL.test(email));
     if (!REGEX.EMAIL.test(email)) {
       openErrorNotification("Ingrese un correo valido");
       return;
@@ -76,7 +75,7 @@ const RecoveryPassword = () => {
                     "Enviar"
                   )
                 }
-                classNameButton="btn-lg-sumbit"
+                classNameButton="btn-lg-submit"
                 disabledClass="btn-lg-disabled"
                 onClick={() => handleSendRecovery()}
                 disabled={isPending ? true : false}

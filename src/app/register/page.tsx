@@ -205,7 +205,7 @@ export default function Register() {
                   "Enviar"
                 )
               }
-              classNameButton="btn-lg-sumbit"
+              classNameButton="btn-lg-submit"
               disabledClass="btn-lg-disabled"
               onClick={() => handleSendNewAffiliate()}
               disabled={isPendingNewAffiliate ? true : false}

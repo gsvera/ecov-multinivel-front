@@ -6,10 +6,11 @@ import { MenuAdmin } from "./MenuAdmin";
 import { MenuClient } from "./MenuClient";
 
 type menuProps = {
+  componenteSelected: string;
   changeModule: (module: string) => void;
 };
 
-export const Menu = ({ changeModule }: menuProps) => {
+export const Menu = ({ changeModule, componenteSelected }: menuProps) => {
   const { userDTO } = useSelector((state: RootState) => state.userSlice);
 
   const handleMenuModule = (module: string) => {
@@ -17,9 +18,15 @@ export const Menu = ({ changeModule }: menuProps) => {
   };
   const ShowMenu =
     userDTO.workgroupId === WORKGROUP.ADMIN ? (
-      <MenuAdmin handleMenuModule={handleMenuModule} />
+      <MenuAdmin
+        handleMenuModule={handleMenuModule}
+        moduleSelected={componenteSelected}
+      />
     ) : (
-      <MenuClient handleMenuModule={handleMenuModule} />
+      <MenuClient
+        handleMenuModule={handleMenuModule}
+        moduleSelected={componenteSelected}
+      />
     );
   return (
     <div className="menu">

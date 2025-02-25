@@ -6,5 +6,10 @@ export const REACT_QUERY_KEYS = {
         getHerarchy: (key:string) => `get-herarchy-${key}`,
         getDataAffiliate: (key:string) => `get-data-affiliate-${key}`,
         getDataAffiliateByUser: (key:string | null) => `get-data-affiliate-by-user-${key}`
+    },
+    product: {
+        getAll: (key:string) => `get-all-products-${key}`,
+        getByUser: (key:string | null) => `get-product-by-user-${key}`,
+        detailQuota: (key:number | null) => `get-detail-quota-by-product-${key}`
     }
 }

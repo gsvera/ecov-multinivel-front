@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { Tooltip } from "antd";
+import "./index.scss";
 
 type buttonCustomProps = {
   disabledClass?: string;
@@ -21,9 +22,9 @@ const ButtonCustom = (props: buttonCustomProps) => {
       <button
         type="button"
         onClick={props?.onClick}
-        className={`pointer click ${
-          props?.disabled ? disabledClass : props?.classNameButton
-        } click`}
+        className={`pointer ${
+          props?.disabled ? disabledClass : props?.classNameButton + " click"
+        }`}
         disabled={props?.disabled}
         style={props?.styleButton}
       >

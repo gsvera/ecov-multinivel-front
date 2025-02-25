@@ -19,6 +19,9 @@
 .t-secondary {
     color: var(--color-text-secondary) ;
 }
+.t-bold {
+    font-weight: bold;
+}
 .t-aling-s {
     text-align: start;
 }
@@ -43,6 +46,13 @@
 .ml-2 {
     margin-left: 1.2em;
 }
+.mb-2 {
+    margin-bottom: 1.2em;
+}
+.my-2 {
+    margin-top: 1.2em;
+    margin-bottom:  1.2em;
+}
 .d-flex {
     display: flex;
 }
@@ -55,7 +65,15 @@
 .click:active{
     transform: scale(0.9);
 }
-.btn-lg-sumbit{
+.btn-submit {
+    background: var(--background-eco-sumbit);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+}
+.btn-lg-submit{
     background: var(--background-eco-sumbit);
     border: none;
     border-radius: 5px;
@@ -63,6 +81,14 @@
     width: 100%;
     padding: 10px;
     font-size: 1.1em;
+}
+.btn-info {
+    background: var(--color-primary);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
 }
 .btn-lg-disabled{
     background: var(--back-color-disabled);
@@ -114,3 +140,52 @@
     padding: 5px;
     border-radius: 3px;
   }
+  .body-content-layout{ 
+    height: 90%;
+    padding: 10px;
+  }
+
+  .table-data-custom{
+    .content-filter{
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        .input-delay{
+            width: 300px;
+            margin-bottom: 15px;
+        }
+    }
+    .table-custom{
+        width: 100%;
+        border-collapse: collapse;
+        max-height: 300px;
+        overflow-y: auto;
+        table{
+
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead {
+            position: sticky;
+            top: 0;
+            background-color: #f9f9f9;
+            z-index: 1;
+            tr {
+                th {
+                    text-align: left;
+                }
+            }
+        }
+        tbody {
+            tr {
+                border-bottom: 1px inset ;
+                td {
+                    height: 35px;
+                }
+            }
+        }
+        th, td {
+            padding: 8px;
+        }
+    }
+}

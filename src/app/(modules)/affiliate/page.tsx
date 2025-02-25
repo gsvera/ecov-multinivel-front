@@ -28,12 +28,12 @@ export default function Affiliate() {
 
   return (
     <div className="d-flex">
-      <Menu changeModule={setComponent} />
+      <Menu changeModule={setComponent} componenteSelected={component} />
       <div className="body-right-content">
         <div style={{ height: "10%" }}>
           <MenuHeader />
         </div>
-        <div style={{ height: "90%" }}>
+        <div className="body-content-layout">
           {component === MODULES_AFFILIATE.MODULE_HERARCHY_AFFILIATE && (
             <TreeHerarchy />
           )}

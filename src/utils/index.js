@@ -79,3 +79,34 @@ export const transformDataToFlow = (
 
   return { nodes, edges };
 };
+
+export const convertCurrency = (n) => {
+  let currencyLocal = Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
+  return currencyLocal.format(n);
+};
+
+export const copyToClipboard = (text) => {
+  navigator.clipboard.writeText(text);
+};
+
+/**
+ * Funcion para generar un url para pdf para iframe desde un string de base64
+ * @param {String} strBs64
+ */
+export const makePdfBase64 = (strBs64) => {
+  const byteCharacters = atob(
+    strBs64.split("base64,")[1]?.replace(/[^A-Za-z0-9+/=]/g, "") || ""
+  );
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], { type: "application/pdf" });
+  const url = URL.createObjectURL(blob);
+  return url;
+};

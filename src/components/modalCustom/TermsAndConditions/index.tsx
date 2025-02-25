@@ -1,13 +1,7 @@
 import { Modal } from "antd";
+import { modalCustomProps } from "../types";
 
-type termsAndConditionsProps = {
-  open: boolean;
-  handleClose: () => void;
-};
-export const TermsAndConditions = ({
-  open,
-  handleClose,
-}: termsAndConditionsProps) => {
+export const TermsAndConditions = ({ open, handleClose }: modalCustomProps) => {
   const handleCloseModal = () => {
     handleClose();
   };

@@ -16,6 +16,16 @@ export enum WORKGROUP {
     CLIENT = 2
 }
 
+export enum STATUS_PAY {
+    PENDIENT = 0,
+    PAY = 1
+}
+
+export enum PAY_METHOD {
+    DEPOSIT = 'deposito | transferencia',
+    ON_LINE = 'en linea'
+}
+
 export const REGEX: {[key:string]:RegExp}= {
     EMAIL: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, 
     NUMBER: /^\d+$/,

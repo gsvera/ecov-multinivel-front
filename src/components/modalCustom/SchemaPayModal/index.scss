@@ -1,0 +1,33 @@
+.schema-pay-modal {
+    top: 10px;
+    .table-pays{
+            width: 100%;
+            border-collapse: collapse;
+            max-height: 300px;
+            overflow-y: auto;
+            table{
+    
+                width: 100%;
+                border-collapse: collapse;
+            }
+            thead {
+                position: sticky;
+                top: 0;
+                background-color: #f9f9f9;
+                z-index: 1;
+            }
+            tbody {
+                tr {
+                    border-bottom: 1px inset ;
+                    td {
+                        height: 35px;
+                    }
+                }
+            }
+            th, td {
+                padding: 5px;
+                text-align: center;
+            }
+        }
+    
+}

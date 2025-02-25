@@ -1,0 +1,22 @@
+.card-article{
+    width: 270px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px 10px;
+    .content-card-img{
+        width: 100%;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .card-img{
+        width: 50%;
+        margin: 10px auto;
+    }
+    .price {
+        color: var(--color-primary);
+        font-weight: 600;
+    }
+}

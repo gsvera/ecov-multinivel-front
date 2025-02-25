@@ -1,5 +1,4 @@
 "use client";
-import { ResponseAPi } from "@/api/responseApi";
 import apiUser from "@/api/servicesEcov/apiUser";
 import ButtonCustom from "@/components/ButtonCustom";
 import LoaderPage from "@/components/LoaderPage";
@@ -15,6 +14,7 @@ import { REGEX } from "@/config/constants";
 import { useNotification } from "@/hooks/UseNotification";
 import { parsePasswordEncrypt } from "@/utils";
 import { useRouter } from "next/navigation";
+import { ResponseApi } from "@/api/responseApi";
 
 export default function ResetNewPassword() {
   const searchParams = useSearchParams();
@@ -32,7 +32,7 @@ export default function ResetNewPassword() {
     queryKey: [REACT_QUERY_KEYS.user.validExpiredTokenPassword(token ?? "")],
     queryFn: () => apiUser.validExpiredTokenRecoveryPassword(token),
     ...{
-      select: (data: ResponseAPi) => data.data,
+      select: (data: ResponseApi) => data.data,
       enabled: !!token,
     },
   });
@@ -40,11 +40,11 @@ export default function ResetNewPassword() {
   const { mutate: sendNewPassword, isPending: isPendingUpdatePassword } =
     useMutation({
       mutationFn: (data: unknown) => apiUser.saveNewPassword(data),
-      onSuccess: (data: ResponseAPi) => handleSuccessSendNewPassword(data),
+      onSuccess: (data: ResponseApi) => handleSuccessSendNewPassword(data),
       onError: (err) => handleErrorSendNewPassword(err),
     });
 
-  const handleSuccessSendNewPassword = (data: ResponseAPi) => {
+  const handleSuccessSendNewPassword = (data: ResponseApi) => {
     if (data.data.error) {
       openErrorNotification("El token de recuperación ha expirado");
       return;
@@ -159,7 +159,7 @@ export default function ResetNewPassword() {
                       "Enviar"
                     )
                   }
-                  classNameButton="btn-lg-sumbit"
+                  classNameButton="btn-lg-submit"
                   disabledClass="btn-lg-disabled"
                   onClick={() => handleSendNewPassword()}
                   disabled={isPendingUpdatePassword ? true : false}
