@@ -10,6 +10,7 @@ type customNodeProps = {
     firstName: string;
     lastName: string;
     createdDate: string;
+    active: boolean;
     onClick: (id: string) => void;
   };
 };
@@ -17,7 +18,11 @@ type customNodeProps = {
 const CustomNode = ({ data }: customNodeProps) => {
   const createdDate = dayjs(data.createdDate).format("DD/MM/YYYY");
   return (
-    <div className="custom-node-tree">
+    <div
+      className={`custom-node-tree ${
+        data.active ? "node-active" : "node-inactive"
+      }`}
+    >
       {/* Encabezado del nodo con botón */}
       <div className="node-header">
         <div className="node-title">

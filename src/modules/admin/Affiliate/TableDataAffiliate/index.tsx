@@ -7,17 +7,13 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./index.scss";
 import DelaySearcher from "@/components/DelaySearcher";
 import CustomPaginated, { Pagination } from "@/components/CustomPaginated";
+import { defaultPageParams } from "@/config/constants";
 
 type ColumnType = {
   index: string;
   label: string | React.ReactNode;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render: (_: any, row: any) => React.ReactNode;
-};
-
-const defaultPageParams = {
-  page: 0,
-  size: 10,
 };
 
 export const TableDataAffiliate = () => {

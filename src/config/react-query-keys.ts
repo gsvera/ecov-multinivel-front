@@ -10,6 +10,10 @@ export const REACT_QUERY_KEYS = {
     product: {
         getAll: (key:string) => `get-all-products-${key}`,
         getByUser: (key:string | null) => `get-product-by-user-${key}`,
+        getPurchased: (key:string) => `get-product-purchades-by-filter-${key}`,
         detailQuota: (key:number | null) => `get-detail-quota-by-product-${key}`
+    },
+    payment: {
+        getFilterData: (key:string) => `get-by-filter-data-payment-${key}`
     }
 }

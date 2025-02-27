@@ -11,6 +11,14 @@ export const apiProduct = {
       `${BASE_URL}/get-articles-by-user?id-user=${idUser}`
     );
   },
+  getPurchasedProductByFilter: function (pageParams) {
+    const { page, size, word } = pageParams;
+    return axiosInstance.get(
+      `${BASE_URL}/get-purchased-product-by-filter?page=${page}&size=${size}${
+        word && "&word=" + word
+      }`
+    );
+  },
   getQuotaDetailByProduct: function (idProduct) {
     return axiosInstance.get(
       `${BASE_URL}/get-quotas-by-product?id-product=${idProduct}`

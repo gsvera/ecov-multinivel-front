@@ -38,10 +38,10 @@ export const MenuAdmin = ({ handleMenuModule, moduleSelected }: menuProps) => {
       </div>
       <div
         className={`element-menu ${
-          moduleSelected === MODULES_ADMIN.MODULE_PAYS &&
+          moduleSelected === MODULES_ADMIN.MODULE_PAYMENT &&
           "element-menu-selected"
         }`}
-        onClick={() => handleClick(MODULES_ADMIN.MODULE_PAYS)}
+        onClick={() => handleClick(MODULES_ADMIN.MODULE_PAYMENT)}
       >
         <BsCashCoin className="icon-menu-principal" /> Pagos
       </div>

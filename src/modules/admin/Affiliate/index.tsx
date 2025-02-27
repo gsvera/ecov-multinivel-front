@@ -17,8 +17,8 @@ export const Affiliate = () => {
     },
   ];
   return (
-    <div className="affiliate">
-      <div className="t-center mt-1">Afiliados Eco-v</div>
+    <div className="affiliate" style={{ paddingLeft: 15, paddingRight: 15 }}>
+      <h3 className=" mt-1 t-subtitle">Afiliados Eco-v</h3>
       <Tabs defaultActiveKey="1" items={items} />
     </div>
   );

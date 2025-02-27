@@ -10,6 +10,7 @@ import { MenuHeader } from "@/components/MenuHeader";
 import { MODULES_ADMIN, WORKGROUP } from "@/config/constants";
 import Affiliate from "@/modules/admin/Affiliate";
 import Buys from "@/modules/admin/buys";
+import Payment from "@/modules/admin/Payment";
 
 export default function Admin() {
   const { token, userDTO } = useSelector((state: RootState) => state.userSlice);
@@ -38,6 +39,7 @@ export default function Admin() {
         <div className="body-content-layout">
           {component === MODULES_ADMIN.MODULE_AFFILIATES && <Affiliate />}
           {component === MODULES_ADMIN.MODULE_BUYS && <Buys />}
+          {component === MODULES_ADMIN.MODULE_PAYMENT && <Payment />}
         </div>
       </div>
     </div>

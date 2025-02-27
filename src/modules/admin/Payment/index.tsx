@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ItemsResponse, ResponseApi } from "@/api/responseApi";
-import apiProduct from "@/api/servicesEcov/apiProduct";
-import CustomPaginated, { Pagination } from "@/components/CustomPaginated";
-import CustomTable from "@/components/CustomTable";
-import DelaySearcher from "@/components/DelaySearcher";
-import { defaultPageParams, PAY_METHOD, STATUS_PAY } from "@/config/constants";
 import { REACT_QUERY_KEYS } from "@/config/react-query-keys";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Tooltip } from "antd";
+import { apiPayment } from "@/api/servicesEcov/apiPayment";
+import { ItemsResponse, ResponseApi } from "@/api/responseApi";
 import { useEffect, useMemo, useState } from "react";
-import { EyeOutlined } from "@ant-design/icons";
-import dayjs from "dayjs";
+import { defaultPageParams, PAY_METHOD, STATUS_PAY } from "@/config/constants";
+import CustomPaginated, { Pagination } from "@/components/CustomPaginated";
+import DelaySearcher from "@/components/DelaySearcher";
+import CustomTable from "@/components/CustomTable";
 import ViewFileModal from "@/components/modalCustom/ViewFileModal";
+import { convertCurrency } from "@/utils";
+import { Tooltip } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
 import ButtonCustom from "@/components/ButtonCustom";
 
-export const Buys = () => {
+export const Payment = () => {
   const [pageParams, setPageParams] = useState({
     ...defaultPageParams,
     word: "",
@@ -23,9 +23,9 @@ export const Buys = () => {
   const [openModalViewFile, setOpenModalViewFile] = useState(false);
   const queryClient = useQueryClient();
 
-  const { data: dataList, isPending: isPendingDataList } = useQuery({
-    queryKey: [REACT_QUERY_KEYS.product.getPurchased("list-purchased")],
-    queryFn: () => apiProduct.getPurchasedProductByFilter(pageParams),
+  const { data: dataListPayment, isPending: isPendingListPayment } = useQuery({
+    queryKey: [REACT_QUERY_KEYS.payment.getFilterData("list-payment")],
+    queryFn: () => apiPayment.getByFilterData(pageParams),
     ...{
       select: (data: ResponseApi) => data.data,
     },
@@ -34,8 +34,8 @@ export const Buys = () => {
   const tableHead = [
     {
       index: "id",
-      label: <div className="t-center">Numero de orden</div>,
-      render: (row: number) => <div className="t-center">{row}</div>,
+      label: "Id Pago",
+      render: (row: number) => <div>{row}</div>,
     },
     {
       index: "nameAffiliate",
@@ -43,23 +43,33 @@ export const Buys = () => {
       render: (row: string) => <div>{row}</div>,
     },
     {
-      index: "nameProduct",
-      label: "Articulo",
+      index: "emailAffiliate",
+      label: "Email",
       render: (row: string) => <div>{row}</div>,
     },
     {
-      index: "statusBuy",
-      label: "Estatus",
+      index: "phoneNumber",
+      label: "Telefono",
       render: (row: string) => <div>{row}</div>,
     },
     {
-      index: "dateBuy",
-      label: "Fecha de compra",
-      render: (row: string) => <div>{dayjs(row).format("DD/MM/YYYY")}</div>,
+      index: "amount",
+      label: "Monto",
+      render: (row: number) => <div>{convertCurrency(row)}</div>,
+    },
+    {
+      index: "payMethod",
+      label: "Método de pago",
+      render: (row: string) => <div>{row}</div>,
+    },
+    {
+      index: "description",
+      label: "Descripción",
+      render: (row: string) => <div>{row}</div>,
     },
     {
       index: "paymentFile",
-      label: <div className="t-center">Comprobante de pago</div>,
+      label: "Comprobante de pago",
       render: (row: string, data: any) => {
         return (
           <div className="t-center">
@@ -81,7 +91,7 @@ export const Buys = () => {
       index: "",
       label: <div>Acción</div>,
       render: (_: string, data: any) => {
-        if (data.statusPayAffiliate === STATUS_PAY.PENDIENT)
+        if (data.statusPay === STATUS_PAY.PENDIENT)
           return (
             <ButtonCustom
               text="Aprobar"
@@ -94,21 +104,20 @@ export const Buys = () => {
     },
   ];
 
-  const handleApprovedPay = (idPay: number) => {
-    console.log(idPay);
-  };
-  const dataListResult = useMemo(() => {
-    return (dataList?.items as ItemsResponse) ?? { result: [] };
-  }, [dataList?.items]);
+  const handleApprovedPay = (id: number) => {};
+
+  const dataListResultPayment = useMemo(() => {
+    return (dataListPayment?.items as ItemsResponse) ?? { result: [] };
+  }, [dataListPayment?.items]);
 
   const dataTable = useMemo(
-    () => dataListResult.result ?? [],
-    [dataListResult]
+    () => dataListResultPayment.result ?? [],
+    [dataListResultPayment]
   );
 
   useEffect(() => {
     queryClient.invalidateQueries({
-      queryKey: [REACT_QUERY_KEYS.product.getPurchased("list-purchased")],
+      queryKey: [REACT_QUERY_KEYS.payment.getFilterData("list-payment")],
     });
   }, [pageParams]);
 
@@ -134,19 +143,18 @@ export const Buys = () => {
     setOpenModalViewFile(false);
     setFileView({ fileData: "" });
   };
-
   return (
     <div
       className="table-data-affiliate"
       style={{ paddingLeft: 15, paddingRight: 15 }}
     >
-      <h3 className="mt-1 t-subtitle">Compra de fotovoltaicos</h3>
+      <h3 className="mt-1 t-subtitle">Pagos de afiliados</h3>
       <div className="content-filter">
         <div className="input-delay">
           <DelaySearcher
             onChangeHandler={handleSearch}
             infoText="Se busca por: nombre y email"
-            loadingSearch={isPendingDataList}
+            loadingSearch={isPendingListPayment}
             cleanValueText
           />
         </div>
@@ -162,7 +170,7 @@ export const Buys = () => {
         <CustomPaginated
           text="Filas por pagina"
           onChangePagination={handlePagination}
-          isLastPage={dataListResult?.isLastPage}
+          isLastPage={dataListResultPayment?.isLastPage}
           page={pageParams.page + 1}
           size={pageParams.size}
         />
@@ -178,4 +186,4 @@ export const Buys = () => {
   );
 };
 
-export default Buys;
+export default Payment;

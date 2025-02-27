@@ -103,7 +103,7 @@ export const BankDeposit = ({
       idUser: userDTO.id,
       idProduct: idProduct,
       amountToCharge,
-      statusPay: STATUS_PAY.PAY,
+      statusPay: STATUS_PAY.PENDIENT,
       payMethod: PAY_METHOD.DEPOSIT,
       paymentFile: payFile,
     });

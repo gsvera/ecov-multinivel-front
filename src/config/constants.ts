@@ -2,7 +2,7 @@ export enum MODULES_ADMIN {
     MODULE_AFFILIATES = 'MODULE_AFFILIATES',
     MODULE_BUYS = 'MODULE_BUYS',
     MODULE_COMMISSIONS = 'MODULE_COMMISSIONS',
-    MODULE_PAYS = 'MODULE_PAYS',
+    MODULE_PAYMENT = 'MODULE_PAYMENT',
     MODULE_DOCUMENTS = 'MODULE_DOCUMENTS'
 }
 
@@ -32,3 +32,8 @@ export const REGEX: {[key:string]:RegExp}= {
     PASSWORD: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/,
     AMOUNT: /^\d{1,3}(,\d{3})*(\.\d{1,2})?$/
 }
+
+export const defaultPageParams = {
+    page: 0,
+    size: 10,
+  };

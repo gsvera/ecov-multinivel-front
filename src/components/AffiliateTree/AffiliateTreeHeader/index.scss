@@ -1,5 +1,4 @@
 .custom-node-tree{
-    border: 0.1em solid gray;   
     border-radius: 5px;
     padding: 10px 15px;    
     min-width: 160px;
@@ -14,4 +13,10 @@
             max-width: 130px;
         }
     }
+}
+.node-active{
+    border: 0.2em solid var(--background-eco-sumbit);
+}
+.node-inactive {
+    border: 0.2em solid var(--color-danger)
 }

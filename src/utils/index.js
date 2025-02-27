@@ -50,6 +50,7 @@ export const transformDataToFlow = (
         lastName: user.lastName,
         createdDate: user.createdDate,
         idUser: user.id,
+        active: user.active,
         onClick: (name) => console.log(`Hola ${name}`),
       },
       position: { x: posX, y: posY },
