@@ -144,16 +144,13 @@ export const Payment = () => {
     setFileView({ fileData: "" });
   };
   return (
-    <div
-      className="table-data-affiliate"
-      style={{ paddingLeft: 15, paddingRight: 15 }}
-    >
+    <div className="table-data-affiliate p-body">
       <h3 className="mt-1 t-subtitle">Pagos de afiliados</h3>
       <div className="content-filter">
         <div className="input-delay">
           <DelaySearcher
             onChangeHandler={handleSearch}
-            infoText="Se busca por: nombre y email"
+            infoText="Se busca por: nombre de afiliado y email"
             loadingSearch={isPendingListPayment}
             cleanValueText
           />

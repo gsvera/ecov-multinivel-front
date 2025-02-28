@@ -15,5 +15,8 @@ export const REACT_QUERY_KEYS = {
     },
     payment: {
         getFilterData: (key:string) => `get-by-filter-data-payment-${key}`
+    },
+    commission: {
+        getByFilterDada: (key:string) => `get-by-filter-data-comission-${key}`
     }
 }

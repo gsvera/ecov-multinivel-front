@@ -11,6 +11,7 @@ import { MODULES_ADMIN, WORKGROUP } from "@/config/constants";
 import Affiliate from "@/modules/admin/Affiliate";
 import Buys from "@/modules/admin/buys";
 import Payment from "@/modules/admin/Payment";
+import { Commissions } from "@/modules/admin/Commissions";
 
 export default function Admin() {
   const { token, userDTO } = useSelector((state: RootState) => state.userSlice);
@@ -40,6 +41,7 @@ export default function Admin() {
           {component === MODULES_ADMIN.MODULE_AFFILIATES && <Affiliate />}
           {component === MODULES_ADMIN.MODULE_BUYS && <Buys />}
           {component === MODULES_ADMIN.MODULE_PAYMENT && <Payment />}
+          {component === MODULES_ADMIN.MODULE_COMMISSIONS && <Commissions />}
         </div>
       </div>
     </div>
