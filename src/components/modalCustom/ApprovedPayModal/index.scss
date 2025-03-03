@@ -1,0 +1,13 @@
+.approved-pay-modal{
+    top: 20px;
+    .ant-modal-content {
+        height: 90vh !important;
+        .ant-modal-body {
+            height: 100% !important;
+            .content-media {
+                height: 90%;
+                overflow-y: auto;
+            }
+        }
+    }
+}

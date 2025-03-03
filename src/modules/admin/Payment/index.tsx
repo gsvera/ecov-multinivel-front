@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { REACT_QUERY_KEYS } from "@/config/react-query-keys";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiPayment } from "@/api/servicesEcov/apiPayment";
-import { ItemsResponse, ResponseApi } from "@/api/responseApi";
+import { ItemsResponse, ObjectResponse, ResponseApi } from "@/api/responseApi";
 import { useEffect, useMemo, useState } from "react";
 import { defaultPageParams, PAY_METHOD, STATUS_PAY } from "@/config/constants";
 import CustomPaginated, { Pagination } from "@/components/CustomPaginated";
@@ -13,15 +13,24 @@ import { convertCurrency } from "@/utils";
 import { Tooltip } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import ButtonCustom from "@/components/ButtonCustom";
+import ApprovedPayModal from "@/components/modalCustom/ApprovedPayModal";
+import { payToApprovedProps } from "@/config/general-type";
+import { useNotification } from "@/hooks/UseNotification";
 
 export const Payment = () => {
+  const queryClient = useQueryClient();
+  const { openErrorNotification, openSuccessNotification } = useNotification();
   const [pageParams, setPageParams] = useState({
     ...defaultPageParams,
     word: "",
   });
   const [fileView, setFileView] = useState({ fileData: "" });
   const [openModalViewFile, setOpenModalViewFile] = useState(false);
-  const queryClient = useQueryClient();
+  const [openApprovedModal, setOpenApprovedModal] = useState(false);
+  const [payToApproved, setPayToApproved] = useState<payToApprovedProps>({
+    idPay: null,
+    file: null,
+  });
 
   const { data: dataListPayment, isPending: isPendingListPayment } = useQuery({
     queryKey: [REACT_QUERY_KEYS.payment.getFilterData("list-payment")],
@@ -30,6 +39,21 @@ export const Payment = () => {
       select: (data: ResponseApi) => data.data,
     },
   });
+
+  const { mutate: confirmPay, isPending: isPendingConfirmPay } = useMutation({
+    mutationFn: (data: any) => apiPayment.confirmPayByBuy(data),
+    onSuccess: (data: ResponseApi) => handleSuccessConfirmPay(data.data),
+    onError: (error) => openErrorNotification(error.message),
+  });
+
+  const handleSuccessConfirmPay = (data: ObjectResponse) => {
+    if (data.error) return openErrorNotification(data.message);
+    openSuccessNotification("Se aprovo el pago con éxito");
+    queryClient.invalidateQueries({
+      queryKey: [REACT_QUERY_KEYS.payment.getFilterData("list-payment")],
+    });
+    setOpenApprovedModal(false);
+  };
 
   const tableHead = [
     {
@@ -95,7 +119,7 @@ export const Payment = () => {
           return (
             <ButtonCustom
               text="Aprobar"
-              onClick={() => handleApprovedPay(data.id)}
+              onClick={() => handleApprovedPayModal(data)}
               classNameButton="btn-submit"
             />
           );
@@ -104,7 +128,13 @@ export const Payment = () => {
     },
   ];
 
-  const handleApprovedPay = (id: number) => {};
+  const handleApprovedPayModal = (objBuy: any) => {
+    setOpenApprovedModal(true);
+    setPayToApproved({
+      idPay: objBuy.id,
+      file: objBuy.paymentFile,
+    });
+  };
 
   const dataListResultPayment = useMemo(() => {
     return (dataListPayment?.items as ItemsResponse) ?? { result: [] };
@@ -143,6 +173,14 @@ export const Payment = () => {
     setOpenModalViewFile(false);
     setFileView({ fileData: "" });
   };
+  const handleCloseApprovedModal = () => {
+    setOpenApprovedModal(false);
+  };
+
+  const handleConfirmPay = () => {
+    confirmPay({ idPay: payToApproved.idPay });
+  };
+
   return (
     <div className="table-data-affiliate p-body">
       <h3 className="mt-1 t-subtitle">Pagos de afiliados</h3>
@@ -178,6 +216,15 @@ export const Payment = () => {
           handleClose: handleCloseViewFile,
         }}
         file={fileView}
+      />
+      <ApprovedPayModal
+        modalCustom={{
+          open: openApprovedModal,
+          handleClose: handleCloseApprovedModal,
+        }}
+        file={payToApproved.file}
+        btnDisabled={isPendingConfirmPay}
+        onSuccess={handleConfirmPay}
       />
     </div>
   );

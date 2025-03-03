@@ -19,3 +19,21 @@ export type commissionType = {
     amountCommission: number;
     statusPay: STATUS_PAY;
 }
+
+export type buyType = {
+    id: number;
+    idPayAffiliate: number;
+    dateBuy: string;
+    nameAffiliate: string;
+    nameProduct: string;
+    payMethod: string;
+    paymentFile: string;
+    statusBuy: string;
+    statusPayAffiliate: number;
+}
+
+export type payToApprovedProps = {
+    idBuy?: number | null;
+    idPay: number | null;
+    file: string | null;
+  };

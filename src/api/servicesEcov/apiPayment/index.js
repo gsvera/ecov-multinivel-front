@@ -11,6 +11,14 @@ export const apiPayment = {
       }`
     );
   },
+  confirmPayByBuy: function (data) {
+    const { idPay, idBuy } = data;
+    return axiosInstance.put(
+      `${BASE_URL}/confirmed-buy-by-pay?id-pay=${idPay}${
+        idBuy ? "&id-buy=" + idBuy : ""
+      }`
+    );
+  },
 };
 
 export default apiPayment;

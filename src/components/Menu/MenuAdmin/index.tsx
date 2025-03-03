@@ -29,21 +29,21 @@ export const MenuAdmin = ({ handleMenuModule, moduleSelected }: menuProps) => {
       </div>
       <div
         className={`element-menu ${
-          moduleSelected === MODULES_ADMIN.MODULE_COMMISSIONS &&
-          "element-menu-selected"
-        }`}
-        onClick={() => handleClick(MODULES_ADMIN.MODULE_COMMISSIONS)}
-      >
-        <BsBookmarkStar className="icon-menu-principal" /> Comisiones
-      </div>
-      <div
-        className={`element-menu ${
           moduleSelected === MODULES_ADMIN.MODULE_PAYMENT &&
           "element-menu-selected"
         }`}
         onClick={() => handleClick(MODULES_ADMIN.MODULE_PAYMENT)}
       >
         <BsCashCoin className="icon-menu-principal" /> Pagos
+      </div>
+      <div
+        className={`element-menu ${
+          moduleSelected === MODULES_ADMIN.MODULE_COMMISSIONS &&
+          "element-menu-selected"
+        }`}
+        onClick={() => handleClick(MODULES_ADMIN.MODULE_COMMISSIONS)}
+      >
+        <BsBookmarkStar className="icon-menu-principal" /> Comisiones
       </div>
       <div
         className={`element-menu ${
