@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ItemsResponse, ObjectResponse, ResponseApi } from "@/api/responseApi";
+import { ItemsResponse, ResponseApi } from "@/api/responseApi";
 import apiProduct from "@/api/servicesEcov/apiProduct";
 import CustomPaginated, { Pagination } from "@/components/CustomPaginated";
 import CustomTable from "@/components/CustomTable";
 import DelaySearcher from "@/components/DelaySearcher";
 import { defaultPageParams, PAY_METHOD, STATUS_PAY } from "@/config/constants";
 import { REACT_QUERY_KEYS } from "@/config/react-query-keys";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Tooltip } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { EyeOutlined } from "@ant-design/icons";
@@ -15,11 +15,7 @@ import ViewFileModal from "@/components/modalCustom/ViewFileModal";
 import ButtonCustom from "@/components/ButtonCustom";
 import { ApprovedPayModal } from "@/components/modalCustom/ApprovedPayModal";
 import { buyType, payToApprovedProps } from "@/config/general-type";
-import { useNotification } from "@/hooks/UseNotification";
-import apiPayment from "@/api/servicesEcov/apiPayment";
-
 export const Buys = () => {
-  const { openErrorNotification, openSuccessNotification } = useNotification();
   const [pageParams, setPageParams] = useState({
     ...defaultPageParams,
     word: "",
@@ -42,23 +38,6 @@ export const Buys = () => {
     },
   });
 
-  const { mutate: confirmBuy, isPending: isPendingConfirmPay } = useMutation({
-    mutationFn: (data: any) => apiPayment.confirmPayByBuy(data),
-    onSuccess: (data: ResponseApi) => handleSuccessConfirmBuy(data.data),
-    onError: (err) => openErrorNotification(err.message),
-  });
-
-  const handleSuccessConfirmBuy = (data: ObjectResponse) => {
-    if (data.error) {
-      return openErrorNotification(data.message);
-    }
-    openSuccessNotification("Se ha confirmado la compra");
-    queryClient.invalidateQueries({
-      queryKey: [REACT_QUERY_KEYS.product.getPurchased("list-purchased")],
-    });
-    setOpenApprovedModal(false);
-  };
-
   const tableHead = [
     {
       index: "id",
@@ -77,13 +56,15 @@ export const Buys = () => {
     },
     {
       index: "statusBuy",
-      label: "Estatus",
-      render: (row: string) => <div>{row}</div>,
+      label: <div className="t-center">Estatus de compra</div>,
+      render: (row: string) => <div className="t-center">{row}</div>,
     },
     {
       index: "dateBuy",
-      label: "Fecha de compra",
-      render: (row: string) => <div>{dayjs(row).format("DD/MM/YYYY")}</div>,
+      label: <div className="t-center">Fecha de compra</div>,
+      render: (row: string) => (
+        <div className="t-center">{dayjs(row).format("DD/MM/YYYY")}</div>
+      ),
     },
     {
       index: "paymentFile",
@@ -107,15 +88,17 @@ export const Buys = () => {
     },
     {
       index: "",
-      label: <div>Acción</div>,
+      label: <div className="t-center">Acción</div>,
       render: (_: string, data: buyType) => {
         if (data.statusPayAffiliate === STATUS_PAY.PENDIENT)
           return (
-            <ButtonCustom
-              text="Aprobar"
-              onClick={() => handleShowApprovedPay(data)}
-              classNameButton="btn-info"
-            />
+            <div className="t-center">
+              <ButtonCustom
+                text="Revisar pago"
+                onClick={() => handleShowApprovedPay(data)}
+                classNameButton="btn-info"
+              />
+            </div>
           );
         else <></>;
       },
@@ -130,6 +113,7 @@ export const Buys = () => {
       file: objBuy.paymentFile,
     });
   };
+
   const dataListResult = useMemo(() => {
     return (dataList?.items as ItemsResponse) ?? { result: [] };
   }, [dataList?.items]);
@@ -149,6 +133,7 @@ export const Buys = () => {
     const newPageparams = { ...pageParams, word: value };
     setPageParams(newPageparams);
   };
+
   const handlePagination = (data: Pagination) => {
     const newPageparams = {
       ...pageParams,
@@ -167,12 +152,9 @@ export const Buys = () => {
     setOpenModalViewFile(false);
     setFileView({ fileData: "" });
   };
+
   const handleCloseApprovedModal = () => {
     setOpenApprovedModal(false);
-  };
-
-  const handleConfirmApprovedPay = () => {
-    confirmBuy({ idBuy: payToApproved.idBuy, idPay: payToApproved.idPay });
   };
 
   return (
@@ -216,9 +198,10 @@ export const Buys = () => {
           open: openApprovedModal,
           handleClose: handleCloseApprovedModal,
         }}
-        file={payToApproved.file}
-        btnDisabled={isPendingConfirmPay}
-        onSuccess={handleConfirmApprovedPay}
+        payToApproved={payToApproved}
+        queryToInvalidate={REACT_QUERY_KEYS.product.getPurchased(
+          "list-purchased"
+        )}
       />
     </div>
   );

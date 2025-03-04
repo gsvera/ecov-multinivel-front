@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { REACT_QUERY_KEYS } from "@/config/react-query-keys";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiPayment } from "@/api/servicesEcov/apiPayment";
-import { ItemsResponse, ObjectResponse, ResponseApi } from "@/api/responseApi";
+import { ItemsResponse, ResponseApi } from "@/api/responseApi";
 import { useEffect, useMemo, useState } from "react";
 import { defaultPageParams, PAY_METHOD, STATUS_PAY } from "@/config/constants";
 import CustomPaginated, { Pagination } from "@/components/CustomPaginated";
@@ -15,11 +15,9 @@ import { EyeOutlined } from "@ant-design/icons";
 import ButtonCustom from "@/components/ButtonCustom";
 import ApprovedPayModal from "@/components/modalCustom/ApprovedPayModal";
 import { payToApprovedProps } from "@/config/general-type";
-import { useNotification } from "@/hooks/UseNotification";
 
 export const Payment = () => {
   const queryClient = useQueryClient();
-  const { openErrorNotification, openSuccessNotification } = useNotification();
   const [pageParams, setPageParams] = useState({
     ...defaultPageParams,
     word: "",
@@ -39,21 +37,6 @@ export const Payment = () => {
       select: (data: ResponseApi) => data.data,
     },
   });
-
-  const { mutate: confirmPay, isPending: isPendingConfirmPay } = useMutation({
-    mutationFn: (data: any) => apiPayment.confirmPayByBuy(data),
-    onSuccess: (data: ResponseApi) => handleSuccessConfirmPay(data.data),
-    onError: (error) => openErrorNotification(error.message),
-  });
-
-  const handleSuccessConfirmPay = (data: ObjectResponse) => {
-    if (data.error) return openErrorNotification(data.message);
-    openSuccessNotification("Se aprovo el pago con éxito");
-    queryClient.invalidateQueries({
-      queryKey: [REACT_QUERY_KEYS.payment.getFilterData("list-payment")],
-    });
-    setOpenApprovedModal(false);
-  };
 
   const tableHead = [
     {
@@ -118,9 +101,9 @@ export const Payment = () => {
         if (data.statusPay === STATUS_PAY.PENDIENT)
           return (
             <ButtonCustom
-              text="Aprobar"
+              text="Revisar pago"
               onClick={() => handleApprovedPayModal(data)}
-              classNameButton="btn-submit"
+              classNameButton="btn-info"
             />
           );
         else <></>;
@@ -155,6 +138,7 @@ export const Payment = () => {
     const newPageparams = { ...pageParams, word: value };
     setPageParams(newPageparams);
   };
+
   const handlePagination = (data: Pagination) => {
     const newPageparams = {
       ...pageParams,
@@ -173,12 +157,9 @@ export const Payment = () => {
     setOpenModalViewFile(false);
     setFileView({ fileData: "" });
   };
+
   const handleCloseApprovedModal = () => {
     setOpenApprovedModal(false);
-  };
-
-  const handleConfirmPay = () => {
-    confirmPay({ idPay: payToApproved.idPay });
   };
 
   return (
@@ -222,9 +203,10 @@ export const Payment = () => {
           open: openApprovedModal,
           handleClose: handleCloseApprovedModal,
         }}
-        file={payToApproved.file}
-        btnDisabled={isPendingConfirmPay}
-        onSuccess={handleConfirmPay}
+        payToApproved={payToApproved}
+        queryToInvalidate={REACT_QUERY_KEYS.payment.getFilterData(
+          "list-payment"
+        )}
       />
     </div>
   );

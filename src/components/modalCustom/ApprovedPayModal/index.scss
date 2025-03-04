@@ -1,12 +1,17 @@
 .approved-pay-modal{
-    top: 20px;
+    top: 10px;
     .ant-modal-content {
-        height: 90vh !important;
+        height: 95vh !important;
         .ant-modal-body {
             height: 100% !important;
             .content-media {
-                height: 90%;
+                margin-top: 20px;
+                height: 70%;
                 overflow-y: auto;
+                border: 0.1em solid gray;
+            }
+            .btn-lg-submit, .btn-lg-cancel, .disabled-button{
+                width: 45%;
             }
         }
     }

@@ -19,6 +19,9 @@ export const apiPayment = {
       }`
     );
   },
+  rejectPay: function (data) {
+    return axiosInstance.put(`${BASE_URL}/reject-pay`, data);
+  },
 };
 
 export default apiPayment;

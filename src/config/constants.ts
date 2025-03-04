@@ -17,7 +17,13 @@ export enum WORKGROUP {
 }
 
 export enum STATUS_PAY {
-    VALIDACION_PAGO= -1,
+    REJECTED_PAY = -1,
+    PENDIENT = 0,
+    PAY = 1
+}
+
+export enum STATUS_PAY_COMMISSION {
+    VALIDATE_PAYMENT = -1,
     PENDIENT = 0,
     PAY = 1
 }

@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiCommission } from "@/api/servicesEcov/apiCommission";
 import { ItemsResponse, ResponseApi } from "@/api/responseApi";
 import { useEffect, useMemo, useState } from "react";
-import { defaultPageParams, STATUS_PAY } from "@/config/constants";
+import { defaultPageParams, STATUS_PAY, STATUS_PAY_COMMISSION } from "@/config/constants";
 import CustomPaginated, { Pagination } from "@/components/CustomPaginated";
 import DelaySearcher from "@/components/DelaySearcher";
 import CustomTable from "@/components/CustomTable";
@@ -71,7 +71,7 @@ export const Commissions = () => {
       label: "Estatus de pago",
       render: (row: number) => {
         switch (row) {
-          case STATUS_PAY.VALIDACION_PAGO:
+          case STATUS_PAY_COMMISSION.VALIDATE_PAYMENT:
             return <div>Pendiente validación de pago</div>;
           case STATUS_PAY.PENDIENT:
             return <div>Pendiente a pagar</div>;
